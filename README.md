@@ -19,7 +19,12 @@
 - [Semantic Skills & Agent Capabilities](#-semantic-skills--agent-capabilities)
 - [Project State Persistence (`.dc/`)](#-project-state-persistence-dc)
 - [🚀 Quickstart & Setup](#-quickstart--setup)
-- [💬 Step-by-Step Example Workflow](#-step-by-step-example-workflow)
+- [💬 Interactive Example Workflows (Steroids Mode)](#-interactive-example-workflows-steroids-mode)
+  - [Workflow A: New Feature (Full SDD Pipeline)](#workflow-a-new-feature-full-sdd-pipeline)
+  - [Workflow B: Root-Cause Bug Fix (Zero Symptom Patching)](#workflow-b-root-cause-bug-fix-zero-symptom-patching)
+  - [Workflow C: Pre-Mortem & Architecture Debate](#workflow-c-pre-mortem--architecture-debate)
+  - [Workflow D: OWASP Security Audit & Hardening](#workflow-d-owasp-security-audit--hardening)
+  - [Workflow E: Legacy Code Distillation & Refactoring](#workflow-e-legacy-code-distillation--refactoring)
 - [🔗 Reference & Community](#-reference--community)
 
 ---
@@ -179,25 +184,68 @@ rm -rf .git && git init
 
 ---
 
-## 💬 Step-by-Step Example Workflow
+## 💬 Interactive Example Workflows (Steroids Mode)
 
-Here is how a typical session looks in your AI assistant chat:
+Copy and paste any of these prompt patterns into your AI assistant chat to see Don Cheli SDD in action:
 
-### Step 1: Specify Requirement
-> **User:** *"We need to add JWT authentication with refresh tokens and rate limiting."*  
-> **Agent:** Activates `@doncheli-spec` ➔ Generates `.dc/specs/jwt_auth.feature` with P1 happy and sad paths, plus DBML token schema.
+---
 
-### Step 2: Create Technical Plan
-> **User:** *"Looks good. Let's create the technical plan."*  
-> **Agent:** Activates `@doncheli-plan` & `@doncheli-api-contract` ➔ Writes architecture blueprint, token expiration rules, and endpoints in `.dc/plan.md`.
+### Workflow A: New Feature (Full SDD Pipeline)
+> **Goal:** Build a robust feature from scratch with BDD specs, architecture blueprint, and TDD.
 
-### Step 3: TDD Task Breakdown & Execution
-> **User:** *"Let's implement Task 1."*  
-> **Agent:** Activates `@doncheli-implement` ➔ Writes unit tests for JWT verification (RED), implements minimum code (GREEN), refactors, and updates `.dc/progress.md`.
+```text
+Prompt 1 (Specify):
+"We need to implement a Redis-based rate limiter middleware for our REST API (100 requests/minute per API key). Let's specify this using @doncheli-spec."
 
-### Step 4: Quality Review & Security Scan
-> **User:** *"Review our changes and run a security check."*  
-> **Agent:** Activates `@doncheli-review` and `@doncheli-security` ➔ Scans code across 7 dimensions + OWASP Top 10, confirming zero stubs and 92% test coverage.
+Prompt 2 (Plan):
+"The spec looks great. Now create the technical blueprint and API contract using @doncheli-plan."
+
+Prompt 3 (Implement):
+"Let's execute the TDD tasks from .dc/progress.md one by one using @doncheli-implement. Write failing tests first!"
+
+Prompt 4 (Review):
+"Run a 7-dimension code review using @doncheli-review and verify all quality gates pass."
+```
+
+---
+
+### Workflow B: Root-Cause Bug Fix (Zero Symptom Patching)
+> **Goal:** Fix a complex bug without adding superficial `try/except` wrappers.
+
+```text
+Prompt:
+"Users report a 500 error when uploading files larger than 10MB during peak hours. Apply Don Cheli Iron Law 2: investigate the root cause from the logs, write a failing unit test to reproduce the bug (RED), and then fix it cleanly (GREEN)."
+```
+
+---
+
+### Workflow C: Pre-Mortem & Architecture Debate
+> **Goal:** Evaluate a risky architectural decision before writing any code.
+
+```text
+Prompt:
+"We are considering migrating our event log from PostgreSQL to DynamoDB. Run a pre-mortem using @doncheli-reasoning to anticipate potential failures, and run an adversarial debate (@doncheli-debate) between a Cloud Architect, a DBA, and a QA Lead."
+```
+
+---
+
+### Workflow D: OWASP Security Audit & Hardening
+> **Goal:** Scan the codebase for security flaws before a production deployment.
+
+```text
+Prompt:
+"Perform an OWASP Top 10 security audit using @doncheli-security on our authentication and payment handler modules. Identify any injection risks, broken access controls, or missing rate limits."
+```
+
+---
+
+### Workflow E: Legacy Code Distillation & Refactoring
+> **Goal:** Understand complex legacy code, extract specs, and refactor safely.
+
+```text
+Prompt:
+"Analyze the legacy billing module in `src/legacy/billing.js`. Use @doncheli-distill to extract its behavioral Gherkin specifications, and generate a TDD refactoring plan to rewrite it using Clean Architecture."
+```
 
 ---
 
