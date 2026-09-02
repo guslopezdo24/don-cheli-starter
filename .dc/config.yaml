@@ -1,0 +1,10 @@
+framework:
+  name: "Don Cheli SDD"
+  version: "2.0.0"
+  locale: "en" # en (English default), es (Spanish), pt (Portuguese)
+  rigor: "standard" # atomic, poc, micro, standard, complex
+
+quality:
+  tdd_enforced: true
+  min_coverage: 85
+  allow_stubs: false
