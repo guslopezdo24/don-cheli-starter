@@ -16,7 +16,7 @@
 - [The 3 Iron Laws (Non-Negotiable)](#-the-3-iron-laws-non-negotiable)
 - [How the Framework Works (The 7-Phase Pipeline)](#-how-the-framework-works-the-7-phase-pipeline)
 - [Complexity Auto-Detection (Levels 0 to 4)](#-complexity-auto-detection-levels-0-to-4)
-- [Semantic Skills & Agent Capabilities](#-semantic-skills--agent-capabilities)
+- [Semantic Skills & SuperPowers Capabilities](#-semantic-skills--superpowers-capabilities)
 - [Project State Persistence (`.dc/`)](#-project-state-persistence-dc)
 - [🚀 Quickstart & Setup](#-quickstart--setup)
 - [💬 Natural Conversation vs. Explicit Skills](#-natural-conversation-vs-explicit-skills)
@@ -26,6 +26,7 @@
   - [Workflow C: Pre-Mortem & Architecture Debate](#workflow-c-pre-mortem--architecture-debate)
   - [Workflow D: OWASP Security Audit & Hardening](#workflow-d-owasp-security-audit--hardening)
   - [Workflow E: Legacy Code Distillation & Refactoring](#workflow-e-legacy-code-distillation--refactoring)
+  - [Workflow F: Isolated Subagent & Worktree Execution](#workflow-f-isolated-subagent--worktree-execution)
 - [🔗 Reference & Community](#-reference--community)
 
 ---
@@ -51,8 +52,8 @@ This template repository is derived from the core framework at **[doncheli/don-c
 | :--- | :--- |
 | **Vibe coding:** Prompts lead directly to code changes. | **Specification first:** Code is written only after BDD specs are accepted. |
 | **No test guarantee:** Tests are added as an afterthought (or skipped). | **TDD as Law:** Code without failing tests first is rejected. |
-| **Context loss:** The agent forgets context in long sessions. | **Persistent State:** State lives in versioned `.dc/` Markdown files. |
-| **Superficial fixes:** AI patches symptoms with try/except wrappers. | **Root Cause First:** AI must isolate the root cause before patching. |
+| **Context loss:** The agent forgets context in long sessions. | **Persistent State & Subagent Isolation:** State lives in versioned `.dc/` Markdown files. |
+| **Superficial fixes:** AI patches symptoms with try/except wrappers. | **Root Cause First:** AI must isolate the root cause before patching (`doncheli-debug`). |
 | **Tool Lock-in:** Tied to one specific IDE or CLI tool. | **Agnostic & Universal:** Reads universal `AGENTS.md` and `.agent/skills/`. |
 
 ---
@@ -117,20 +118,25 @@ Not every task needs the full pipeline. The framework automatically adapts rigor
 
 ---
 
-## 🧠 Semantic Skills & Agent Capabilities
+## 🧠 Semantic Skills & SuperPowers Capabilities
 
-The template includes 28 pre-configured skills under `.agent/skills/` built on the open **[agentskills.io](https://agentskills.io)** standard.
+The template includes 32 pre-configured skills under `.agent/skills/` built on the open **[agentskills.io](https://agentskills.io)** standard.
 
 AI agents discover and activate these skills automatically via natural conversation:
 
-### 🛠️ Core SDD Skills
+### 🛠️ Core SDD & Execution Skills
 * `doncheli-spec` — Generate Gherkin BDD specs and DBML schemas.
 * `doncheli-plan` — Create technical blueprints and architecture designs.
 * `doncheli-implement` — TDD execution engine (RED → GREEN → REFACTOR).
 * `doncheli-review` — 7-dimension adversarial peer review.
 * `doncheli-security` — OWASP Top 10 static security audit.
+* `doncheli-subagent` — Dispatch fresh subagents per task to prevent context bloat.
+* `doncheli-debug` — Systematic root-cause debugging (hypothesis → reproduction test → fix).
+* `doncheli-worktree` — Execute tasks in isolated git worktrees without touching active working branch.
+* `doncheli-finish` — Pre-completion empirical verification & clean branch integration.
 
 ### 🏛️ Architecture & Reasoning
+* `doncheli-solid` — Audit and refactor codebase against the 5 SOLID principles.
 * `doncheli-reasoning` — Apply 15 mental models (Pre-mortem, 5-Whys, Pareto, First Principles, Inversion, etc.).
 * `doncheli-debate` — Multi-role debate (CPO vs Architect vs QA vs Security).
 * `doncheli-tech-panel` — Senior dev experts table consultation.
@@ -155,7 +161,7 @@ Agents automatically select skills based on semantic intent. Both styles work id
 
 | Approach | Prompt Example | How It Works |
 | :--- | :--- | :--- |
-| **1. Pure Natural Language** *(Recommended)* | `"Let's build a rate limiter middleware for our REST API using TDD."` | The agent automatically matches your intent to the `doncheli-spec` and `doncheli-implement` skills. |
+| **1. Pure Natural Language** *(Recommended)* | `"Let's build a rate limiter middleware for our REST API using TDD."` | The agent automatically matches your intent to `doncheli-spec` and `doncheli-implement` skills. |
 | **2. Explicit Skill Mention** *(Optional)* | `"Let's write unit tests and code for this feature using @doncheli-implement."` | Explicitly pinpoints a specific skill if you want 100% explicit control. |
 
 ---
@@ -206,37 +212,24 @@ Simply talk to your AI agent using any of these natural conversational prompt pa
 ---
 
 ### Workflow A: New Feature (Full SDD Pipeline)
-> **Goal:** Build a robust feature from scratch with BDD specs, architecture blueprint, and TDD.
-
 ```text
-Prompt 1 (Specify):
-"We need to implement a Redis-based rate limiter middleware for our REST API (100 requests/minute per API key). Let's specify this first."
-
-Prompt 2 (Plan):
-"The spec looks great. Now create the technical blueprint and API contract."
-
-Prompt 3 (Implement):
-"Let's execute the TDD tasks from .dc/progress.md one by one. Write failing unit tests first!"
-
-Prompt 4 (Review):
-"Run a 7-dimension code review and verify all quality gates pass."
+Prompt 1 (Specify): "We need to implement a Redis-based rate limiter middleware (100 req/min). Specify this first."
+Prompt 2 (Plan):    "Create the technical blueprint and API contract."
+Prompt 3 (Implement): "Execute the TDD tasks from .dc/progress.md. Write failing unit tests first!"
+Prompt 4 (Review):   "Run a 7-dimension code review and verify all quality gates pass."
 ```
 
 ---
 
 ### Workflow B: Root-Cause Bug Fix (Zero Symptom Patching)
-> **Goal:** Fix a complex bug without adding superficial `try/except` wrappers.
-
 ```text
 Prompt:
-"Users report a 500 error when uploading files larger than 10MB during peak hours. Apply Don Cheli Iron Law 2: investigate the root cause from logs, write a failing unit test to reproduce the bug (RED), and then fix it cleanly (GREEN)."
+"Users report a 500 error when uploading files larger than 10MB during peak hours. Investigate the root cause from logs, write a failing unit test to reproduce the bug (RED), and then fix it cleanly (GREEN)."
 ```
 
 ---
 
 ### Workflow C: Pre-Mortem & Architecture Debate
-> **Goal:** Evaluate a risky architectural decision before writing any code.
-
 ```text
 Prompt:
 "We are considering migrating our event log from PostgreSQL to DynamoDB. Run a pre-mortem to anticipate potential failures, and run an adversarial debate between a Cloud Architect, a DBA, and a QA Lead."
@@ -245,8 +238,6 @@ Prompt:
 ---
 
 ### Workflow D: OWASP Security Audit & Hardening
-> **Goal:** Scan the codebase for security flaws before a production deployment.
-
 ```text
 Prompt:
 "Perform an OWASP Top 10 security audit on our authentication and payment handler modules. Identify any injection risks, broken access controls, or missing rate limits."
@@ -255,11 +246,17 @@ Prompt:
 ---
 
 ### Workflow E: Legacy Code Distillation & Refactoring
-> **Goal:** Understand complex legacy code, extract specs, and refactor safely.
-
 ```text
 Prompt:
 "Analyze the legacy billing module in `src/legacy/billing.js`. Extract its behavioral Gherkin specifications, and generate a TDD refactoring plan to rewrite it using Clean Architecture."
+```
+
+---
+
+### Workflow F: Isolated Subagent & Worktree Execution
+```text
+Prompt:
+"Execute the implementation plan for our payment processing module in a dedicated git worktree, dispatching isolated subagents per task to keep our main working tree clean."
 ```
 
 ---

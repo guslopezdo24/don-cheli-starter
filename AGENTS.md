@@ -17,10 +17,10 @@ This repository uses a clean, tool-agnostic structure compatible with Google Ant
 
 2. **Root Cause First (Debugging Protocol):**
    - Never apply superficial symptom patches or swallow exceptions.
-   - Investigate and isolate the exact root cause using empirical log evidence before changing code.
+   - Investigate and isolate the exact root cause using empirical log evidence before changing code (`@doncheli-debug`).
 
 3. **Evidence Before Assertions (Verification Protocol):**
-   - Never claim a task is complete, a bug is fixed, or tests pass without showing actual execution logs/output.
+   - Never claim a task is complete, a bug is fixed, or tests pass without showing actual execution logs/output (`@doncheli-finish`).
    - Coverage must be ≥ 85% on new logic.
 
 ---
@@ -69,12 +69,16 @@ Adjust workflow depth based on task scope:
 
 Skills are automatically activated based on user intent. You can also explicitly invoke skills using `@doncheli-<skill>`:
 
-### Core SDD Lifecycle
+### Core SDD Lifecycle & Execution
 - `@doncheli-spec` — Generate Gherkin BDD specs and DBML schemas from requirements.
 - `@doncheli-plan` — Create technical blueprints, API contracts, and database models.
 - `@doncheli-implement` — TDD execution engine (RED → GREEN → REFACTOR).
 - `@doncheli-review` — 7-dimension adversarial code review.
 - `@doncheli-security` — OWASP Top 10 static security audit.
+- `@doncheli-subagent` — Dispatch isolated subagents per task to prevent context degradation.
+- `@doncheli-debug` — Systematic root-cause debugging (hypothesis → reproduction test → fix).
+- `@doncheli-worktree` — Isolate execution tasks in dedicated git worktrees.
+- `@doncheli-finish` — Pre-completion empirical verification, evidence audit, and clean branch integration.
 
 ### Architecture & Reasoning
 - `@doncheli-solid` — Audit and refactor codebase against the 5 SOLID Object-Oriented principles.
