@@ -18,6 +18,7 @@
 - [Complexity Auto-Detection (Levels 0 to 4)](#-complexity-auto-detection-levels-0-to-4)
 - [Semantic Skills & SuperPowers Capabilities](#-semantic-skills--superpowers-capabilities)
 - [Project State Persistence (`.dc/`)](#-project-state-persistence-dc)
+- [⚙️ Deep-Dive: Project Configuration (`.dc/config.yaml`)](#%EF%B8%8F-deep-dive-project-configuration-dcconfigyaml)
 - [🚀 Quickstart & Setup](#-quickstart--setup)
 - [💬 Natural Conversation vs. Explicit Skills](#-natural-conversation-vs-explicit-skills)
 - [💬 Interactive Example Workflows (Steroids Mode)](#-interactive-example-workflows-steroids-mode)
@@ -152,27 +153,13 @@ AI agents discover and activate these skills automatically via natural conversat
 
 ---
 
-## 💬 Natural Conversation vs. Explicit Skills
-
-> **Is using `@doncheli-implement` or `@` notation required?**  
-> **NO!** You can speak to your AI agent in 100% natural, plain language.
-
-Agents automatically select skills based on semantic intent. Both styles work identically:
-
-| Approach | Prompt Example | How It Works |
-| :--- | :--- | :--- |
-| **1. Pure Natural Language** *(Recommended)* | `"Let's build a rate limiter middleware for our REST API using TDD."` | The agent automatically matches your intent to `doncheli-spec` and `doncheli-implement` skills. |
-| **2. Explicit Skill Mention** *(Optional)* | `"Let's write unit tests and code for this feature using @doncheli-implement."` | Explicitly pinpoints a specific skill if you want 100% explicit control. |
-
----
-
 ## 💾 Project State Persistence (`.dc/`)
 
 Project state is stored as versionable Markdown files inside `.dc/`:
 
 ```text
 .dc/
-├── config.yaml          # Framework config (locale: en, rigor: standard)
+├── config.yaml          # Framework configuration & quality policies
 ├── status.md            # Active task, current phase, and blockers
 ├── plan.md              # Active technical blueprint & architecture
 ├── progress.md          # TDD implementation checklist
@@ -181,6 +168,35 @@ Project state is stored as versionable Markdown files inside `.dc/`:
 ├── blueprints/          # Architecture diagrams & schematics
 └── memory/decisions/    # Architecture Decision Records (ADRs)
 ```
+
+---
+
+## ⚙️ Deep-Dive: Project Configuration (`.dc/config.yaml`)
+
+The `.dc/config.yaml` file acts as the project's central control file. It determines how strictly the AI agent enforces quality, what language it communicates in, and how deep the pipeline goes:
+
+```yaml
+framework:
+  name: "Don Cheli SDD"
+  version: "2.0.0"
+  locale: "en"         # Communication & documentation language: en, es, pt
+  rigor: "standard"   # Pipeline depth: atomic, poc, micro, standard, complex
+
+quality:
+  tdd_enforced: true  # Enforce Iron Law #1 (No production code without failing unit test first)
+  min_coverage: 85    # Minimum test coverage % required to pass verification gate
+  allow_stubs: false  # Reject // TODO stubs or empty fallback functions in production
+```
+
+### Configuration Options & Effects Table
+
+| Section | Parameter | Allowed Values | Effect on AI Agent Behavior |
+| :--- | :--- | :--- | :--- |
+| `framework` | `locale` | `en`, `es`, `pt` | Sets the language for agent messages, PRDs, Gherkin specs, and `.dc/` status files. *(Note: Code variables, functions, and inline code comments ALWAYS remain in English).* |
+| `framework` | `rigor` | `atomic`, `poc`, `micro`, `standard`, `complex` | Overrides or sets default pipeline depth. `atomic` skips heavy specs; `standard` requires full 7-phase pipeline; `complex` mandates ADR creation. |
+| `quality` | `tdd_enforced` | `true`, `false` | **Enforces Iron Law #1**. If `true`, agent is strictly prohibited from modifying production code without first writing a failing unit test (RED). |
+| `quality` | `min_coverage` | Integer (e.g. `85`) | Defines the minimum test coverage threshold. The `@doncheli-finish` and `@doncheli-review` skills reject tasks below this percentage. |
+| `quality` | `allow_stubs` | `true`, `false` | If `false`, quality scanners reject code containing `// TODO`, `throw new Error('not implemented')`, or empty stub functions. |
 
 ---
 
@@ -202,6 +218,20 @@ git clone https://github.com/doncheli/don-cheli-starter.git my-project
 cd my-project
 rm -rf .git && git init
 ```
+
+---
+
+## 💬 Natural Conversation vs. Explicit Skills
+
+> **Is using `@doncheli-implement` or `@` notation required?**  
+> **NO!** You can speak to your AI agent in 100% natural, plain language.
+
+Agents automatically select skills based on semantic intent. Both styles work identically:
+
+| Approach | Prompt Example | How It Works |
+| :--- | :--- | :--- |
+| **1. Pure Natural Language** *(Recommended)* | `"Let's build a rate limiter middleware for our REST API using TDD."` | The agent automatically matches your intent to `doncheli-spec` and `doncheli-implement` skills. |
+| **2. Explicit Skill Mention** *(Optional)* | `"Let's write unit tests and code for this feature using @doncheli-implement."` | Explicitly pinpoints a specific skill if you want 100% explicit control. |
 
 ---
 
