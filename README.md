@@ -19,6 +19,7 @@
 - [Semantic Skills & Agent Capabilities](#-semantic-skills--agent-capabilities)
 - [Project State Persistence (`.dc/`)](#-project-state-persistence-dc)
 - [🚀 Quickstart & Setup](#-quickstart--setup)
+- [💬 Natural Conversation vs. Explicit Skills](#-natural-conversation-vs-explicit-skills)
 - [💬 Interactive Example Workflows (Steroids Mode)](#-interactive-example-workflows-steroids-mode)
   - [Workflow A: New Feature (Full SDD Pipeline)](#workflow-a-new-feature-full-sdd-pipeline)
   - [Workflow B: Root-Cause Bug Fix (Zero Symptom Patching)](#workflow-b-root-cause-bug-fix-zero-symptom-patching)
@@ -94,12 +95,12 @@ When assigned a task, the AI agent navigates through 7 disciplined phases:
  └──────────┘      └──────────┘
 ```
 
-1. **Specify (`@doncheli-spec`):** Converts natural language requests into Gherkin BDD `.feature` files with prioritized scenarios (P1/P2/P3+) and DBML entity schemas.
+1. **Specify:** Converts natural language requests into Gherkin BDD `.feature` files with prioritized scenarios (P1/P2/P3+) and DBML entity schemas.
 2. **Clarify:** Evaluates specs for edge cases, missing sad paths, and ambiguities (`[NEEDS CLARIFICATION]`).
-3. **Tech Plan (`@doncheli-plan`):** Generates technical blueprint (`.dc/plan.md`) covering service boundaries, DB schema, and API contracts (`@doncheli-api-contract`).
+3. **Tech Plan:** Generates technical blueprint (`.dc/plan.md`) covering service boundaries, DB schema, and API contracts.
 4. **Breakdown:** Divides the blueprint into atomic, ordered TDD tasks in `.dc/progress.md`.
-5. **Implement (`@doncheli-implement`):** Executes TDD task-by-task: Write test (RED) → Write minimum code (GREEN) → Refactor (REFACTOR).
-6. **Review (`@doncheli-review`):** Performs a 7-dimension adversarial code review analyzing Correctness, Security, Architecture, Performance, Tests, Style, and Diff Cleanliness.
+5. **Implement:** Executes TDD task-by-task: Write test (RED) → Write minimum code (GREEN) → Refactor (REFACTOR).
+6. **Review:** Performs a 7-dimension adversarial code review analyzing Correctness, Security, Architecture, Performance, Tests, Style, and Diff Cleanliness.
 7. **Verify:** Runs full test suite, linter, and checks for zero regression before completing the task.
 
 ---
@@ -120,28 +121,42 @@ Not every task needs the full pipeline. The framework automatically adapts rigor
 
 The template includes 28 pre-configured skills under `.agent/skills/` built on the open **[agentskills.io](https://agentskills.io)** standard.
 
-AI agents discover and activate these skills automatically via natural conversation, or you can reference them explicitly:
+AI agents discover and activate these skills automatically via natural conversation:
 
 ### 🛠️ Core SDD Skills
-* `@doncheli-spec` — Generate Gherkin BDD specs and DBML schemas.
-* `@doncheli-plan` — Create technical blueprints and architecture designs.
-* `@doncheli-implement` — TDD execution engine (RED → GREEN → REFACTOR).
-* `@doncheli-review` — 7-dimension adversarial peer review.
-* `@doncheli-security` — OWASP Top 10 static security audit.
+* `doncheli-spec` — Generate Gherkin BDD specs and DBML schemas.
+* `doncheli-plan` — Create technical blueprints and architecture designs.
+* `doncheli-implement` — TDD execution engine (RED → GREEN → REFACTOR).
+* `doncheli-review` — 7-dimension adversarial peer review.
+* `doncheli-security` — OWASP Top 10 static security audit.
 
 ### 🏛️ Architecture & Reasoning
-* `@doncheli-reasoning` — Apply 15 mental models (Pre-mortem, 5-Whys, Pareto, First Principles, Inversion, etc.).
-* `@doncheli-debate` — Multi-role debate (CPO vs Architect vs QA vs Security).
-* `@doncheli-tech-panel` — Senior dev experts table consultation.
-* `@doncheli-api-contract` — REST/GraphQL contract design with retries & circuit breakers.
-* `@doncheli-migrate` — Technology stack migration & wave planning.
+* `doncheli-reasoning` — Apply 15 mental models (Pre-mortem, 5-Whys, Pareto, First Principles, Inversion, etc.).
+* `doncheli-debate` — Multi-role debate (CPO vs Architect vs QA vs Security).
+* `doncheli-tech-panel` — Senior dev experts table consultation.
+* `doncheli-api-contract` — REST/GraphQL contract design with retries & circuit breakers.
+* `doncheli-migrate` — Technology stack migration & wave planning.
 
 ### 📊 Quality & Governance
-* `@doncheli-estimate` — Multi-model effort estimation (COCOMO, Function Points, Poker AI).
-* `@doncheli-drift` — Detect divergence between `.dc/specs/` and actual codebase.
-* `@doncheli-tech-debt` — Identify, quantify, and prioritize technical debt.
-* `@doncheli-changelog` — Auto-generate release changelogs from git history.
-* `@doncheli-context-health` — Analyze and optimize LLM context window usage.
+* `doncheli-estimate` — Multi-model effort estimation (COCOMO, Function Points, Poker AI).
+* `doncheli-drift` — Detect divergence between `.dc/specs/` and actual codebase.
+* `doncheli-tech-debt` — Identify, quantify, and prioritize technical debt.
+* `doncheli-changelog` — Auto-generate release changelogs from git history.
+* `doncheli-context-health` — Analyze and optimize LLM context window usage.
+
+---
+
+## 💬 Natural Conversation vs. Explicit Skills
+
+> **Is using `@doncheli-implement` or `@` notation required?**  
+> **NO!** You can speak to your AI agent in 100% natural, plain language.
+
+Agents automatically select skills based on semantic intent. Both styles work identically:
+
+| Approach | Prompt Example | How It Works |
+| :--- | :--- | :--- |
+| **1. Pure Natural Language** *(Recommended)* | `"Let's build a rate limiter middleware for our REST API using TDD."` | The agent automatically matches your intent to the `doncheli-spec` and `doncheli-implement` skills. |
+| **2. Explicit Skill Mention** *(Optional)* | `"Let's write unit tests and code for this feature using @doncheli-implement."` | Explicitly pinpoints a specific skill if you want 100% explicit control. |
 
 ---
 
@@ -186,7 +201,7 @@ rm -rf .git && git init
 
 ## 💬 Interactive Example Workflows (Steroids Mode)
 
-Copy and paste any of these prompt patterns into your AI assistant chat to see Don Cheli SDD in action:
+Simply talk to your AI agent using any of these natural conversational prompt patterns:
 
 ---
 
@@ -195,16 +210,16 @@ Copy and paste any of these prompt patterns into your AI assistant chat to see D
 
 ```text
 Prompt 1 (Specify):
-"We need to implement a Redis-based rate limiter middleware for our REST API (100 requests/minute per API key). Let's specify this using @doncheli-spec."
+"We need to implement a Redis-based rate limiter middleware for our REST API (100 requests/minute per API key). Let's specify this first."
 
 Prompt 2 (Plan):
-"The spec looks great. Now create the technical blueprint and API contract using @doncheli-plan."
+"The spec looks great. Now create the technical blueprint and API contract."
 
 Prompt 3 (Implement):
-"Let's execute the TDD tasks from .dc/progress.md one by one using @doncheli-implement. Write failing tests first!"
+"Let's execute the TDD tasks from .dc/progress.md one by one. Write failing unit tests first!"
 
 Prompt 4 (Review):
-"Run a 7-dimension code review using @doncheli-review and verify all quality gates pass."
+"Run a 7-dimension code review and verify all quality gates pass."
 ```
 
 ---
@@ -214,7 +229,7 @@ Prompt 4 (Review):
 
 ```text
 Prompt:
-"Users report a 500 error when uploading files larger than 10MB during peak hours. Apply Don Cheli Iron Law 2: investigate the root cause from the logs, write a failing unit test to reproduce the bug (RED), and then fix it cleanly (GREEN)."
+"Users report a 500 error when uploading files larger than 10MB during peak hours. Apply Don Cheli Iron Law 2: investigate the root cause from logs, write a failing unit test to reproduce the bug (RED), and then fix it cleanly (GREEN)."
 ```
 
 ---
@@ -224,7 +239,7 @@ Prompt:
 
 ```text
 Prompt:
-"We are considering migrating our event log from PostgreSQL to DynamoDB. Run a pre-mortem using @doncheli-reasoning to anticipate potential failures, and run an adversarial debate (@doncheli-debate) between a Cloud Architect, a DBA, and a QA Lead."
+"We are considering migrating our event log from PostgreSQL to DynamoDB. Run a pre-mortem to anticipate potential failures, and run an adversarial debate between a Cloud Architect, a DBA, and a QA Lead."
 ```
 
 ---
@@ -234,7 +249,7 @@ Prompt:
 
 ```text
 Prompt:
-"Perform an OWASP Top 10 security audit using @doncheli-security on our authentication and payment handler modules. Identify any injection risks, broken access controls, or missing rate limits."
+"Perform an OWASP Top 10 security audit on our authentication and payment handler modules. Identify any injection risks, broken access controls, or missing rate limits."
 ```
 
 ---
@@ -244,7 +259,7 @@ Prompt:
 
 ```text
 Prompt:
-"Analyze the legacy billing module in `src/legacy/billing.js`. Use @doncheli-distill to extract its behavioral Gherkin specifications, and generate a TDD refactoring plan to rewrite it using Clean Architecture."
+"Analyze the legacy billing module in `src/legacy/billing.js`. Extract its behavioral Gherkin specifications, and generate a TDD refactoring plan to rewrite it using Clean Architecture."
 ```
 
 ---
