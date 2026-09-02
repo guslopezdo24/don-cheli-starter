@@ -77,6 +77,7 @@ Skills are automatically activated based on user intent. You can also explicitly
 - `@doncheli-security` — OWASP Top 10 static security audit.
 
 ### Architecture & Reasoning
+- `@doncheli-solid` — Audit and refactor codebase against the 5 SOLID Object-Oriented principles.
 - `@doncheli-reasoning` — Apply 15 mental models (Pre-mortem, 5-Whys, Pareto, First Principles, Inversion, etc.).
 - `@doncheli-debate` — Adversarial multi-role debate (CPO vs Architect vs QA vs Security).
 - `@doncheli-tech-panel` — Consult a senior engineering expert table.
